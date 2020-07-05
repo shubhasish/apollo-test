@@ -1,4 +1,4 @@
-#Apollo Test
+# Apollo Test
 
 ### Creating Infra
 To create an infra first modify the `terraform.tfvars` file. Insert the appropriate values for the keys.
