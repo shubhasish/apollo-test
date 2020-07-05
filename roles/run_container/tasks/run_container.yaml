@@ -1,7 +1,7 @@
 - name: Start a container with a command
   docker_container:
     name: helloworl
-    image: shubhashish/helloworld
+    image: {{ docker_image }}
     ports:
       - "5000:5000"
     restart_policy: "always"

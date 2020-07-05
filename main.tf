@@ -2,6 +2,12 @@ provider "ansible" {
   version = "~> 1.0"
 }
 
+provider "google" {
+  credentials = file("${var.credential-file}")
+  project = var.project_id
+  region = var.region
+
+}
 
 ############# Variables
 variable "gke_username" {
@@ -9,11 +15,13 @@ variable "gke_username" {
   description = "gke username"
 }
 
+
+
 variable "gke_password" {
   default     = ""
   description = "gke password"
 }
-
+variable "credential-file" {}
 variable "gke_num_nodes" {
   default     = 1
   description = "number of gke nodes"
@@ -39,18 +47,14 @@ variable "gce_ssh_user" {
 variable "gce_ssh_pub_key_file" {
   default = "/Users/shubhasish/.ssh/my_id.pub"
 }
+variable "docker_image" {}
 
 variable "instance-type" {}
 variable "instance-name" {}
 
 
 ############ VPC
-provider "google" {
-  credentials = file("talenticacse-57a42a3c1bdf.json")
-  project = var.project_id
-  region = var.region
 
-}
 
 data "http" "myip" {
   url = "http://ipv4.icanhazip.com"
@@ -72,7 +76,7 @@ resource "google_compute_subnetwork" "subnet" {
 }
 
 resource "google_compute_firewall" "default" {
-  name    = "test-firewall"
+  name    = "${var.project_id}-firewall"
   network = google_compute_network.vpc.name
 
   allow {
@@ -141,6 +145,7 @@ resource "ansible_host" "webserver" {
     become = "yes"
     interpreter_python = "/usr/bin/python3"
     ansible_ssh_private_key_file = replace(var.gce_ssh_pub_key_file, ".pub","")
+    docker_image = var.docker_image
 
 
   }
