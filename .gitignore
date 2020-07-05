@@ -1,0 +1,8 @@
+.terraform/
+.terraform/*
+.idea/
+.idea/*
+talentica*
+venv/
+terraform.tfstate
+terraform.tfstate.backup

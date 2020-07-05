@@ -1,0 +1,8 @@
+- name: Update and upgrade apt packages
+  apt:
+    upgrade: "yes"
+    update_cache: yes
+
+- name: ensure nginx is at the latest version
+  apt: name=nginx state=latest
+  notify: enable nginx

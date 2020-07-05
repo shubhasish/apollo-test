@@ -1,0 +1,10 @@
+- name: copy redirect conf
+  copy:
+    src: files/redirect_ubuntu.conf
+    dest: /etc/nginx/sites-available/default
+    owner: root
+    group: root
+    mode: 0644
+  when: ansible_os_family == 'Debian'
+  notify: restart nginx
+

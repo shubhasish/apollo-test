@@ -1,0 +1,9 @@
+---
+
+- name: install and configure webserver
+  hosts: webserver
+  gather_facts: yes
+  roles:
+    - {role: nginx, become: yes, become_method: sudo, tags: nginx_installation }
+    - {role: docker, become: yes, become_method: sudo, tags: docker_installation }
+    - {role: run_container, become: yes, become_method: sudo, tags: run_container }

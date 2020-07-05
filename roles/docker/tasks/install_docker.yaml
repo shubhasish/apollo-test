@@ -1,0 +1,26 @@
+- name: Ensure old versions of Docker are not installed.
+  package:
+    name:
+      - docker
+      - docker-engine
+    state: absent
+
+- name: install docker
+  apt:
+    name:
+      - docker.io
+      - python3-pip
+    state: present
+  notify: start docker
+
+- name: Install pip3 docker (for docker-compose)
+  pip:
+    name: docker
+    state: latest
+
+- name: add the image user to the docker group
+  user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: yes
+  notify: restart docker

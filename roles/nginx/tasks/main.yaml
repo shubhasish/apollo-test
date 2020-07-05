@@ -1,0 +1,7 @@
+- include: install_nginx_ubuntu.yaml
+  when: ansible_os_family == 'Debian'
+
+- include: redirect.yaml
+
+- name: Force all notified handlers to run at this point, not waiting for normal sync points
+  meta: flush_handlers
